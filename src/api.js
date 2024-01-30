@@ -1,4 +1,4 @@
-import crypto from 'node: crypto'
+import crypto from 'node:crypto'
 import fetch from "node-fetch";
 
 /**
@@ -12,11 +12,18 @@ export const getData = async (url) => {
     const privateKey = "9e0f38824a227da0b28f447c332c6f2abea8a49c";
 
     const ts =new Date().toISOString();
-    const hash = getHash(publicKey,privateKey,ts)
+    const hash =await getHash(publicKey,privateKey,ts)
 
     url += "?apikey="+publicKey+"&ts="+ts+"&hash="+hash;
-
-    return await (await fetch(url)).json();
+    const response = await (await fetch(url)).json()
+    const trueresponse = [];
+    response.data.results.forEach((element)=> {
+            if (!element.thumbnail.path.includes("image_not_available")){
+                trueresponse.push({nom : element.name, path : element.thumbnail.path+"/portrait_xlarge."+element.thumbnail.extension})
+            }
+        })
+    //console.log(trueresponse)
+    return trueresponse;
 }
 
 /**
@@ -31,3 +38,5 @@ export const getHash = async (publicKey, privateKey, timestamp) => {
     const hash= crypto.createHash('md5').update(timestamp+privateKey+publicKey).digest("hex");
     return hash;
 }
+
+getData("https://gateway.marvel.com:443/v1/public/characters")

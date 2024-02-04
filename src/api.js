@@ -1,5 +1,6 @@
 import crypto from 'node:crypto'
 import fetch from "node-fetch";
+import "dotenv/config";
 
 /**
  * Récupère les données de l'endpoint en utilisant les identifiants
@@ -8,8 +9,8 @@ import fetch from "node-fetch";
  * @return {Promise<json>}
  */
 export const getData = async (url) => {
-    const publicKey = "744082de314eee9f7763f53b14c8c14c";
-    const privateKey = "9e0f38824a227da0b28f447c332c6f2abea8a49c";
+    const publicKey = process.env.PUBKEY;
+    const privateKey = process.env.PRIKEY;
 
     const ts =new Date().toISOString();
     const hash =await getHash(publicKey,privateKey,ts)

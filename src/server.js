@@ -10,7 +10,7 @@ app.register(fastifyView, {
     engine: {
         handlebars: handlebars,
     },
-    root : "../templates",
+    root : "/home/node/app/templates",
     options : {partials: {
         header: 'header.hbs',
         footer: 'footer.hbs'
@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
     return res.view("index.hbs",{ json : characters})
 })
 
-app.listen({port :3000}, (err) => {
+app.listen({port :3000, host:"0.0.0.0"}, (err) => {
     if (err) throw err;
     console.log(`server listening on 3000`);
 });

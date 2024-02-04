@@ -39,4 +39,4 @@ export const getHash = async (publicKey, privateKey, timestamp) => {
     return hash;
 }
 
-getData("https://gateway.marvel.com:443/v1/public/characters")
+//getData("https://gateway.marvel.com:443/v1/public/characters")
